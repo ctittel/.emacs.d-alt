@@ -1,4 +1,4 @@
-;------------------ Paktearchive
+;---------------------- Paktearchive
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
@@ -7,7 +7,7 @@
 (package-initialize)
 
 
-;------------------ Backup Dateien
+;------------------------ Backup Dateien
 (setq
 backup-by-copying t      ; don't clobber symlinks
 delete-old-versions t
@@ -16,11 +16,11 @@ kept-old-versions 2
 version-control t       ; use versioned backups
 )
 
-;------------------ Startup Screen
+;----------------------- Startup Screen
 (setq inhibit-startup-screen t)
 
 
-;------------------- Tastenkombinationen
+;----------------------- Tastenkombinationen
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
@@ -30,13 +30,13 @@ version-control t       ; use versioned backups
 (global-set-key (kbd "C-c l") 'org-store-link)
 
 
-;--------------------------- org-agenda
+;----------------------------- org-agenda
 (setq org-agenda-files '("C:/Users/User/Google Drive/Notes/"))
 
 
 
 
-;-------------------------- org babel (hier python)
+;---------------------------- org babel (hier python)
 (org-babel-do-load-languages
 'org-babel-load-languages
 '((emacs-lisp . nil)
@@ -44,7 +44,7 @@ version-control t       ; use versioned backups
 
 
 
-;------------------------ keine Ahnung
+;-------------------------- keine Ahnung
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
