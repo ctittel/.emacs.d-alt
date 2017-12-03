@@ -1,3 +1,10 @@
+;============ Meine emacs Init ==================
+;------------ Benötigte Packages
+;-------------------------------
+;- org-ref
+
+
+
 ;---------------------- Paktearchive
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
