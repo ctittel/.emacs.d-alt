@@ -1,11 +1,10 @@
 					;============ Meine emacs Init ==================
 					;------------ Benötigte Packages
 					;-------------------------------
-					;- org-ref
+					;-------------- org-ref
 
 
-
-					;---------------------- Paktearchive
+					;----------------- Paktearchive
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
@@ -14,13 +13,15 @@
 (package-initialize)
 
 
-					;------------------------------ vom System
+					;----------------- vom System
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (helm solidity-mode org-ref))))
+ '(package-selected-packages
+   (quote
+    (flycheck company helm solidity-mode org-ref))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -29,14 +30,14 @@
  '(default ((t (:family "Hack" :foundry "outline" :slant normal :weight normal :height 98 :width normal)))))
 
 
-					;--------------------------- Lade nicht vorhandene packages
+					;---------- Lade nicht vorhandene packages
 (unless package-archive-contents
   (package-refresh-contents))
 (package-install-selected-packages)
 
 
 
-					;----------------------------- Backup Dateien
+					;------------- Backup Dateien
 (setq
  backup-by-copying t      ; don't clobber symlinks
  delete-old-versions t
@@ -44,14 +45,17 @@
  kept-old-versions 2
  version-control t       ; use versioned backups
  )
+(setq auto-save-file-name-transforms `((".*" . ,temporary-file-directory)))
+(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
-					;------------------------ Startup Screen
+					;----------- Startup Screen
 (setq inhibit-startup-screen t)
 
-					;--------------------------- Lade Theme
+					;--------------- Lade Theme
 (load-theme 'wombat t)
 
-					;--------------------------------- helm
+					;--------------- helm
 (require 'helm)
 (require 'helm-config)
 
@@ -100,18 +104,30 @@
 
 (helm-mode 1)
 
+					;---------------- Company Mode
+(add-hook 'after-init-hook 'global-company-mode)
 
-					;============================================ ORG-MODE
-					;--------------------------------- org-agenda
+					;---------------- Solidity
+
+(setq solidity-solc-path "C:/Programme/solidity/solc.exe")
+(require 'solidity-mode)
+
+					;----------------- Flycheck
+(global-flycheck-mode)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+
+					;============== ORG-MODE
+					;------------------ org-agenda
 (setq org-agenda-files '("C:/Users/User/Google Drive/Notes/"))
 
-					;-------------------------------- org babel (hier python)
+					;----------- org babel (hier python)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . nil)
    (python . t)))
 
-					;--------------------------- Tastenkombinationen
+					;---------------- Tastenkombinationen
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
@@ -120,7 +136,7 @@
 (require 'org-ref)
 (global-set-key (kbd "C-c l") 'org-store-link)
 
-					;------------------------------Latex Export Klassen
+					;--------------- Latex Export Klassen
 (with-eval-after-load "ox-latex"
   (add-to-list 'org-latex-classes
                '("koma-article" "\\documentclass{scrartcl}"
