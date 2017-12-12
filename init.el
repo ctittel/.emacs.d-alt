@@ -69,6 +69,7 @@
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-c h o") 'helm-occur)
+(global-set-key (kbd "C-x r b") 'helm-bookmarks)
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
@@ -118,9 +119,6 @@
 
 
 					;============== ORG-MODE
-					;------------------ org-agenda
-(setq org-agenda-files '("C:/Users/User/Google Drive/Notes/"))
-
 					;----------- org babel (hier python)
 (org-babel-do-load-languages
  'org-babel-load-languages
