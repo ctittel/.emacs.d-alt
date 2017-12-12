@@ -21,7 +21,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flycheck company helm solidity-mode org-ref))))
+    (langtool flycheck company helm solidity-mode org-ref))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -117,6 +117,16 @@
 (global-flycheck-mode)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+					;----------------- Langtool
+					;----------- languagetool benötigt
+(require 'langtool)
+(setq langtool-language-tool-jar "C:/ProgramData/chocolatey/lib/languagetool/tools/LanguageTool-3.9/languagetool-commandline.jar")
+(setq langtool-default-language "de-DE")
+(setq langtool-mother-tongue "de"
+      langtool-disabled-rules '("WHITESPACE_RULE"
+                                "EN_UNPAIRED_BRACKETS"
+                                "COMMA_PARENTHESIS_WHITESPACE"
+                                "EN_QUOTES"))
 
 					;============== ORG-MODE
 					;----------- org babel (hier python)
