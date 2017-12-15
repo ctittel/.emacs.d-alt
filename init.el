@@ -1,7 +1,6 @@
 					;============ Meine emacs Init ==================
 					;------------ Benötigte Packages
 					;-------------------------------
-					;-------------- org-ref
 
 
 					;----------------- Paktearchive
@@ -19,9 +18,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(custom-enabled-themes (quote (wheatgrass)))
  '(package-selected-packages
    (quote
-    (langtool flycheck company helm solidity-mode org-ref))))
+    (helm-bibtex deft langtool flycheck company helm org-ref))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -51,9 +53,6 @@
 
 					;----------- Startup Screen
 (setq inhibit-startup-screen t)
-
-					;--------------- Lade Theme
-(load-theme 'wombat t)
 
 					;--------------- helm
 (require 'helm)
@@ -85,19 +84,19 @@
       helm-ff-file-name-history-use-recentf t
       helm-echo-input-in-header-line t)
 
-(defun spacemacs//helm-hide-minibuffer-maybe ()
-  "Hide minibuffer in Helm session if we use the header line as input field."
-  (when (with-helm-buffer helm-echo-input-in-header-line)
-    (let ((ov (make-overlay (point-min) (point-max) nil nil t)))
-      (overlay-put ov 'window (selected-window))
-      (overlay-put ov 'face
-                   (let ((bg-color (face-background 'default nil)))
-                     `(:background ,bg-color :foreground ,bg-color)))
-      (setq-local cursor-type nil))))
+					;(defun spacemacs//helm-hide-minibuffer-maybe ()
+					; "Hide minibuffer in Helm session if we use the header line as input field."
+					;(when (with-helm-buffer helm-echo-input-in-header-line)
+					; (let ((ov (make-overlay (point-min) (point-max) nil nil t)))
+					;  (overlay-put ov 'window (selected-window))
+					; (overlay-put ov 'face
+					;             (let ((bg-color (face-background 'default nil)))
+					;              `(:background ,bg-color :foreground ,bg-color)))
+					;(setq-local cursor-type nil))))
 
 
-(add-hook 'helm-minibuffer-set-up-hook
-          'spacemacs//helm-hide-minibuffer-maybe)
+					;(add-hook 'helm-minibuffer-set-up-hook
+					;         'spacemacs//helm-hide-minibuffer-maybe)
 
 (setq helm-autoresize-max-height 0)
 (setq helm-autoresize-min-height 20)
@@ -108,10 +107,6 @@
 					;---------------- Company Mode
 (add-hook 'after-init-hook 'global-company-mode)
 
-					;---------------- Solidity
-
-(setq solidity-solc-path "C:/Programme/solidity/solc.exe")
-(require 'solidity-mode)
 
 					;----------------- Flycheck
 (global-flycheck-mode)
@@ -128,12 +123,48 @@
                                 "COMMA_PARENTHESIS_WHITESPACE"
                                 "EN_QUOTES"))
 
+
+					;----------------------------- deft
+(require 'deft)
+(setq deft-extensions '("txt" "org"))
+(setq deft-directory "$Notizen")
+(setq deft-recursive t)
+(global-set-key (kbd "C-x C-g") 'deft-find-file)
+
 					;============== ORG-MODE
 					;----------- org babel (hier python)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . nil)
    (python . t)))
+
+					;------------- helm bibtex
+(setq bibtex-completion-bibliography "C:/Users/Christoph/Google Drive/Notizen/quellen.bib"
+      bibtex-completion-library-path "c:/Users/Christoph/Google Drive/Archiv/Quellen"
+      bibtex-completion-notes-path "C:/Users/Christoph/Google Drive/Notizen/Quellen")
+
+
+;; open pdf with system pdf viewer (works on mac)
+(setq bibtex-completion-pdf-open-function
+      (lambda (fpath)
+	(start-process "open" "*open*" "open" fpath)))
+
+;; alternative
+;; (setq bibtex-completion-pdf-open-function 'org-open-file)
+
+					;---------------------- org ref
+(setq reftex-default-bibliography '("C:/Users/Christoph/Google Drive/Notizen/quellen.bib"))
+
+;; see org-ref for use of these variables
+(setq  org-ref-default-bibliography '("C:/Users/Christoph/Google Drive/Notizen/quellen.bib")
+       org-ref-pdf-directory "c:/Users/Christoph/Google Drive/Archiv")
+
+;; Tell org-ref to let helm-bibtex find notes for it
+(setq org-ref-notes-function
+      (lambda (thekey)
+	(let ((bibtex-completion-bibliography (org-ref-find-bibliography)))
+	  (bibtex-completion-edit-notes
+	   (list (car (org-ref-get-bibtex-key-and-file thekey)))))))
 
 					;---------------- Tastenkombinationen
 (global-set-key "\C-cl" 'org-store-link)
