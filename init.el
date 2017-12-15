@@ -23,7 +23,7 @@
  '(custom-enabled-themes (quote (wheatgrass)))
  '(package-selected-packages
    (quote
-    (helm-bibtex langtool flycheck company helm org-ref))))
+    (helm-org-rifle helm-bibtex langtool flycheck company helm org-ref))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -126,7 +126,11 @@
 
 
 					;============== ORG-MODE
+					;----------------------- helm org rifle
+(require 'helm-org-rifle)
+(setq helm-org-rifle-show-path t)
 					;----------- org babel (hier python)
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . nil)
