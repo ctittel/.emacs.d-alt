@@ -23,7 +23,7 @@
  '(custom-enabled-themes (quote (wheatgrass)))
  '(package-selected-packages
    (quote
-    (helm-bibtex deft langtool flycheck company helm org-ref))))
+    (helm-bibtex langtool flycheck company helm org-ref))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -124,12 +124,6 @@
                                 "EN_QUOTES"))
 
 
-					;----------------------------- deft
-(require 'deft)
-(setq deft-extensions '("txt" "org"))
-(setq deft-directory "$Notizen")
-(setq deft-recursive t)
-(global-set-key (kbd "C-x C-g") 'deft-find-file)
 
 					;============== ORG-MODE
 					;----------- org babel (hier python)
