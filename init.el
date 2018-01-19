@@ -133,11 +133,11 @@
 
 					;============== ORG-MODE
 					;----------------- latex export
-;(setq org-latex-pdf-process
- ;     '("pdflatex -interaction nonstopmode -output-directory %o %f"
-;	"bibtex %b"
-;	"pdflatex -interaction nonstopmode -output-directory %o %f"
-;	"pdflatex -interaction nonstopmode -output-directory %o %f"))
+(setq org-latex-pdf-process
+      '("pdflatex -interaction nonstopmode -output-directory %o %f"
+	"bibtex %b"
+	"pdflatex -interaction nonstopmode -output-directory %o %f"
+	"pdflatex -interaction nonstopmode -output-directory %o %f"))
 
 					;----------------------- helm org rifle
 (require 'helm-org-rifle)
@@ -201,6 +201,8 @@
     ("\\chapter{%s}" . "\\chapter*{%s}")
     ("\\section{%s}" . "\\section*{%s}")
     ("\\subsection{%s}" . "\\subsection*{%s}")
-    ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+    ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+    ("\\paragraph{%s}" . "\\paragraph*{%s}")
+    ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
   )
 
