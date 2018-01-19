@@ -125,10 +125,15 @@
 
 					;------------------------ Lisp SLIME
 (require 'slime-autoloads)
+(require 'slime)
 (setq inferior-lisp-program "clisp")
-(setq slime-auto-connect 'ask)
-(setq slime-contribs '(slime-fancy))
-(add-to-list 'slime-contribs 'slime-repl)
+;(slime-setup)
+;(setq slime-auto-connect 'ask)
+;(setq slime-contribs '(slime-fancy))
+					;(add-to-list 'slime-contribs 'slime-repl)
+(setf temporary-file-directory "C:\\Users\\Christoph\\AppData\\Local\\Temp")
+;(setf (ext:getenv "temp") temporary-file-directory)
+;(setf (ext:getenv "tmp") temporary-file-directory)
 
 
 					;============== ORG-MODE
