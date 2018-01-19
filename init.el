@@ -20,10 +20,10 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes (quote (wheatgrass)))
+ '(custom-enabled-themes nil)
  '(package-selected-packages
    (quote
-    (helm-org-rifle helm-bibtex langtool flycheck company helm org-ref))))
+    (slime helm-org-rifle helm-bibtex langtool flycheck company helm org-ref))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -123,9 +123,22 @@
                                 "COMMA_PARENTHESIS_WHITESPACE"
                                 "EN_QUOTES"))
 
+					;------------------------ Lisp SLIME
+(require 'slime-autoloads)
+(setq inferior-lisp-program "clisp")
+(setq slime-auto-connect 'ask)
+(setq slime-contribs '(slime-fancy))
+(add-to-list 'slime-contribs 'slime-repl)
 
 
 					;============== ORG-MODE
+					;----------------- latex export
+;(setq org-latex-pdf-process
+ ;     '("pdflatex -interaction nonstopmode -output-directory %o %f"
+;	"bibtex %b"
+;	"pdflatex -interaction nonstopmode -output-directory %o %f"
+;	"pdflatex -interaction nonstopmode -output-directory %o %f"))
+
 					;----------------------- helm org rifle
 (require 'helm-org-rifle)
 (setq helm-org-rifle-show-path t)
