@@ -126,7 +126,7 @@
 					;------------------------ Lisp SLIME
 (require 'slime-autoloads)
 (require 'slime)
-(setq inferior-lisp-program "clisp")
+(setq inferior-lisp-program "sbcl")
 ;(slime-setup)
 ;(setq slime-auto-connect 'ask)
 ;(setq slime-contribs '(slime-fancy))
