@@ -131,7 +131,7 @@
 ;(setq slime-auto-connect 'ask)
 ;(setq slime-contribs '(slime-fancy))
 					;(add-to-list 'slime-contribs 'slime-repl)
-(setf temporary-file-directory "C:\\Users\\Christoph\\AppData\\Local\\Temp")
+(setf temporary-file-directory (substitute-in-file-name "$TEMP"))
 ;(setf (ext:getenv "temp") temporary-file-directory)
 ;(setf (ext:getenv "tmp") temporary-file-directory)
 
@@ -155,9 +155,9 @@
    (python . t)))
 
 					;------------- helm bibtex
-(setq bibtex-completion-bibliography "C:/Users/Christoph/Google Drive/Notizen/quellen.bib"
-      bibtex-completion-library-path "c:/Users/Christoph/Google Drive/Archiv/Quellen"
-      bibtex-completion-notes-path "C:/Users/Christoph/Google Drive/Notizen/Quellen")
+(setq bibtex-completion-bibliography (substitute-in-file-name "$Notes/Quellen.bib")
+      bibtex-completion-library-path (substitute-in-file-name "$Notes/Quellen")
+      bibtex-completion-notes-path (substitute-in-file-name "$Notes/Quellen"))
 
 
 ;; open pdf with system pdf viewer (works on mac)
@@ -169,11 +169,11 @@
 ;; (setq bibtex-completion-pdf-open-function 'org-open-file)
 
 					;---------------------- org ref
-(setq reftex-default-bibliography '("C:/Users/Christoph/Google Drive/Notizen/quellen.bib"))
+(setq reftex-default-bibliography '((substitute-in-file-name "$Notes/Quellen.bib")))
 
 ;; see org-ref for use of these variables
-(setq  org-ref-default-bibliography '("C:/Users/Christoph/Google Drive/Notizen/quellen.bib")
-       org-ref-pdf-directory "c:/Users/Christoph/Google Drive/Archiv")
+(setq  org-ref-default-bibliography '((substitute-in-file-name "$Notes/Quellen.bib"))
+       org-ref-pdf-directory (substitute-in-file-name "$GoogleDrive/Archiv"))
 
 ;; Tell org-ref to let helm-bibtex find notes for it
 (setq org-ref-notes-function
