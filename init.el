@@ -115,7 +115,8 @@
 					;----------------- Langtool
 					;----------- languagetool benötigt
 (require 'langtool)
-(setq langtool-language-tool-jar "C:/ProgramData/chocolatey/lib/languagetool/tools/LanguageTool-3.9/languagetool-commandline.jar")
+;;(setq langtool-language-tool-jar "C:/ProgramData/chocolatey/lib/languagetool/tools/LanguageTool-3.9/languagetool-commandline.jar")
+(setq langtool-language-tool-jar (substitute-in-file-name "$LanguageTool/languagetool-commandline.jar"))
 (setq langtool-default-language "de-DE")
 (setq langtool-mother-tongue "de"
       langtool-disabled-rules '("WHITESPACE_RULE"
