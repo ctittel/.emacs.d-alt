@@ -23,7 +23,7 @@
  '(custom-enabled-themes nil)
  '(package-selected-packages
    (quote
-    (slime helm-org-rifle helm-bibtex langtool flycheck company helm org-ref))))
+    (plantuml-mode slime helm-org-rifle helm-bibtex langtool flycheck company helm org-ref))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -153,7 +153,13 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . nil)
-   (python . t)))
+   (python . t)
+   (plantuml . t)))
+
+					;-------------- plantuml (umgehungsvariable plantuml)
+(setq org-plantuml-jar-path
+     (substitute-in-file-name "$plantuml/plantuml.jar"))
+
 
 					;------------- helm bibtex
 (setq bibtex-completion-bibliography (substitute-in-file-name "$Notes/Quellen.bib")
