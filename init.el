@@ -23,7 +23,7 @@
  '(custom-enabled-themes nil)
  '(package-selected-packages
    (quote
-    (plantuml-mode slime helm-org-rifle helm-bibtex langtool flycheck company helm org-ref))))
+    (elpy plantuml-mode slime helm-org-rifle helm-bibtex langtool flycheck company helm org-ref))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -136,6 +136,9 @@
 ;(setf (ext:getenv "temp") temporary-file-directory)
 ;(setf (ext:getenv "tmp") temporary-file-directory)
 
+					;------------- Python
+(elpy-enable)
+(setq elpy-rpc-backend "jedi")
 
 					;============== ORG-MODE
 					;----------------- latex export
@@ -206,15 +209,17 @@
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
 
-  '("book" "\\documentclass{book}"
-    ("\\part{%s}" . "\\part*{%s}")
-    ("\\chapter{%s}" . "\\chapter*{%s}")
-    ("\\section{%s}" . "\\section*{%s}")
-    ("\\subsection{%s}" . "\\subsection*{%s}")
-    ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-    ("\\paragraph{%s}" . "\\paragraph*{%s}")
-    ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
-  )
+	       '("book" "\\documentclass{book}"
+		 ("\\part{%s}" . "\\part*{%s}")
+		 ("\\chapter{%s}" . "\\chapter*{%s}")
+		 ("\\section{%s}" . "\\section*{%s}")
+		 ("\\subsection{%s}" . "\\subsection*{%s}")
+		 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+
+	       ))
+
 
