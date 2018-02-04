@@ -23,7 +23,7 @@
  '(custom-enabled-themes nil)
  '(package-selected-packages
    (quote
-    (elpy plantuml-mode slime helm-org-rifle helm-bibtex langtool flycheck company helm org-ref))))
+    (deft elpy plantuml-mode slime helm-org-rifle helm-bibtex langtool flycheck company helm org-ref))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -140,6 +140,15 @@
 (elpy-enable)
 (setq elpy-rpc-backend "jedi")
 
+					;---------------- deft
+(require 'deft)
+(setq deft-extensions '("txt" "tex" "org"))
+(setq deft-directory (substitute-in-file-name "$GoogleDrive"))
+(setq deft-recursive t)
+(global-set-key [f8] 'deft)
+(setq deft-use-filename-as-title t)
+(global-set-key (kbd "C-x C-g") 'deft-find-file)
+
 					;============== ORG-MODE
 					;----------------- latex export
 (setq org-latex-pdf-process
@@ -165,9 +174,9 @@
 
 
 					;------------- helm bibtex
-(setq bibtex-completion-bibliography (substitute-in-file-name "$Notes/Quellen.bib")
-      bibtex-completion-library-path (substitute-in-file-name "$Notes/Quellen")
-      bibtex-completion-notes-path (substitute-in-file-name "$Notes/Quellen"))
+;;(setq bibtex-completion-bibliography (substitute-in-file-name "$Notes/Quellen.bib")
+;;      bibtex-completion-library-path (substitute-in-file-name "$Notes/Quellen")
+;;      bibtex-completion-notes-path (substitute-in-file-name "$Notes/Quellen"))
 
 
 ;; open pdf with system pdf viewer (works on mac)
@@ -179,11 +188,11 @@
 ;; (setq bibtex-completion-pdf-open-function 'org-open-file)
 
 					;---------------------- org ref
-(setq reftex-default-bibliography '((substitute-in-file-name "$Notes/Quellen.bib")))
+;; (setq reftex-default-bibliography '((substitute-in-file-name "$Notes/Quellen.bib")))
 
 ;; see org-ref for use of these variables
-(setq  org-ref-default-bibliography '((substitute-in-file-name "$Notes/Quellen.bib"))
-       org-ref-pdf-directory (substitute-in-file-name "$GoogleDrive/Archiv"))
+;;(setq  org-ref-default-bibliography '((substitute-in-file-name "$Notes/Quellen.bib"))
+;;       org-ref-pdf-directory (substitute-in-file-name "$GoogleDrive/Archiv"))
 
 ;; Tell org-ref to let helm-bibtex find notes for it
 (setq org-ref-notes-function
