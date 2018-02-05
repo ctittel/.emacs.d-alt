@@ -174,9 +174,9 @@
 
 
 					;------------- helm bibtex
-;;(setq bibtex-completion-bibliography (substitute-in-file-name "$Notes/Quellen.bib")
-;;      bibtex-completion-library-path (substitute-in-file-name "$Notes/Quellen")
-;;      bibtex-completion-notes-path (substitute-in-file-name "$Notes/Quellen"))
+(setq bibtex-completion-bibliography (substitute-in-file-name "$GoogleDrive/Notizen/Org/quellen.bib")
+      bibtex-completion-library-path (substitute-in-file-name "$GoogleDrive/Archiv/Dokumente/Quellen")
+      bibtex-completion-notes-path (substitute-in-file-name "$GoogleDrive/Notizen/Org"))
 
 
 ;; open pdf with system pdf viewer (works on mac)
@@ -188,11 +188,11 @@
 ;; (setq bibtex-completion-pdf-open-function 'org-open-file)
 
 					;---------------------- org ref
-;; (setq reftex-default-bibliography '((substitute-in-file-name "$Notes/Quellen.bib")))
+(setq reftex-default-bibliography '((substitute-in-file-name "$GoogleDrive/Notizen/Org/quellen.bib")))
 
 ;; see org-ref for use of these variables
-;;(setq  org-ref-default-bibliography '((substitute-in-file-name "$Notes/Quellen.bib"))
-;;       org-ref-pdf-directory (substitute-in-file-name "$GoogleDrive/Archiv"))
+(setq  org-ref-default-bibliography (list (substitute-in-file-name "$GoogleDrive/Notizen/Org/quellen.bib"))
+       org-ref-pdf-directory (substitute-in-file-name "$GoogleDrive/Archiv/Dokumente/Quellen"))
 
 ;; Tell org-ref to let helm-bibtex find notes for it
 (setq org-ref-notes-function
