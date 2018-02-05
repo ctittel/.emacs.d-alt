@@ -23,7 +23,7 @@
  '(custom-enabled-themes nil)
  '(package-selected-packages
    (quote
-    (deft elpy plantuml-mode slime helm-org-rifle helm-bibtex langtool flycheck company helm org-ref))))
+    (deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -157,9 +157,7 @@
 	"pdflatex -interaction nonstopmode -output-directory %o %f"
 	"pdflatex -interaction nonstopmode -output-directory %o %f"))
 
-					;----------------------- helm org rifle
-(require 'helm-org-rifle)
-(setq helm-org-rifle-show-path t)
+
 					;----------- org babel (hier python)
 
 (org-babel-do-load-languages
@@ -174,8 +172,10 @@
 
 
 					;------------- helm bibtex
+(autoload 'helm-bibtex "helm-bibtex" "" t)
+
 (setq bibtex-completion-bibliography (substitute-in-file-name "$GoogleDrive/Notizen/Org/quellen.bib")
-      bibtex-completion-library-path (substitute-in-file-name "$GoogleDrive/Archiv/Dokumente/Quellen")
+      bibtex-completion-library-path (substitute-in-file-name "$GoogleDrive/Notizen/Quellen")
       bibtex-completion-notes-path (substitute-in-file-name "$GoogleDrive/Notizen/Org"))
 
 
@@ -192,7 +192,7 @@
 
 ;; see org-ref for use of these variables
 (setq  org-ref-default-bibliography (list (substitute-in-file-name "$GoogleDrive/Notizen/Org/quellen.bib"))
-       org-ref-pdf-directory (substitute-in-file-name "$GoogleDrive/Archiv/Dokumente/Quellen"))
+       org-ref-pdf-directory (substitute-in-file-name "$GoogleDrive/Notizen/Quellen/"))
 
 ;; Tell org-ref to let helm-bibtex find notes for it
 (setq org-ref-notes-function
