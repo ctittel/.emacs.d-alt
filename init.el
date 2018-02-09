@@ -23,7 +23,7 @@
  '(custom-enabled-themes nil)
  '(package-selected-packages
    (quote
-    (deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref))))
+    (w3 deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -150,6 +150,11 @@
 (global-set-key (kbd "C-x C-g") 'deft-find-file)
 
 					;============== ORG-MODE
+					;------------- org agenda
+(setq org-log-done 'time)
+(setq org-agenda-files (list (substitute-in-file-name "$GoogleDrive/Notizen/Org/todo.org")))
+(setq org-archive-location "archiv.org::datetree/")
+
 					;----------------- latex export
 (setq org-latex-pdf-process
       '("pdflatex -interaction nonstopmode -output-directory %o %f"
