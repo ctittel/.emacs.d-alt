@@ -150,6 +150,9 @@
 (global-set-key (kbd "C-x C-g") 'deft-find-file)
 
 					;============== ORG-MODE
+					;------- org mode
+(setq org-startup-folded nil)
+
 					;------------- org agenda
 (setq org-log-done 'time)
 (setq org-agenda-files (list (substitute-in-file-name "$GoogleDrive/Notizen/Org/todo.org")))
