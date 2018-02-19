@@ -20,10 +20,13 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes nil)
+ '(custom-enabled-themes (quote (leuven)))
+ '(custom-safe-themes
+   (quote
+    ("599f1561d84229e02807c952919cd9b0fbaa97ace123851df84806b067666332" default)))
  '(package-selected-packages
    (quote
-    (w3 deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref))))
+    (zenburn-theme w3 deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -143,11 +146,14 @@
 					;---------------- deft
 (require 'deft)
 (setq deft-extensions '("txt" "tex" "org"))
-(setq deft-directory (substitute-in-file-name "$GoogleDrive"))
+(setq deft-directory (substitute-in-file-name "$GoogleDrive/Notizen"))
 (setq deft-recursive t)
 (global-set-key [f8] 'deft)
 (setq deft-use-filename-as-title t)
 (global-set-key (kbd "C-x C-g") 'deft-find-file)
+(setq deft-new-file-format "%Y%m%d%H%M")
+(setq deft-default-extension "org")
+(setq deft-text-mode 'org-mode)
 
 					;============== ORG-MODE
 					;------- org mode
