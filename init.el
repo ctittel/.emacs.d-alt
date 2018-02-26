@@ -90,6 +90,9 @@
 
 					;----------- Startup Screen
 (setq inhibit-startup-screen t)
+					;-------------------- Menu Bar und Tool Bar
+(menu-bar-mode -1)
+(tool-bar-mode -1)
 
 					;--------------- helm
 (require 'helm)
