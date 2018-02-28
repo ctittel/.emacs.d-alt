@@ -27,8 +27,54 @@
  '(custom-enabled-themes (quote (alect-black)))
  '(custom-safe-themes
    (quote
-    ("04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "599f1561d84229e02807c952919cd9b0fbaa97ace123851df84806b067666332" default)))
+    ("5e3fc08bcadce4c6785fc49be686a4a82a356db569f55d411258984e952f194a" "7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "599f1561d84229e02807c952919cd9b0fbaa97ace123851df84806b067666332" default)))
+ '(diary-entry-marker (quote font-lock-variable-name-face))
+ '(emms-mode-line-icon-image-cache
+   (quote
+    (image :type xpm :ascent center :data "/* XPM */
+static char *note[] = {
+/* width height num_colors chars_per_pixel */
+\"    10   11        2            1\",
+/* colors */
+\". c #358d8d\",
+\"# c None s None\",
+/* pixels */
+\"###...####\",
+\"###.#...##\",
+\"###.###...\",
+\"###.#####.\",
+\"###.#####.\",
+\"#...#####.\",
+\"....#####.\",
+\"#..######.\",
+\"#######...\",
+\"######....\",
+\"#######..#\" };")))
  '(fci-rule-color "#383838")
+ '(gnus-logo-colors (quote ("#0d7b72" "#adadad")))
+ '(gnus-mode-line-image-cache
+   (quote
+    (image :type xpm :ascent center :data "/* XPM */
+static char *gnus-pointer[] = {
+/* width height num_colors chars_per_pixel */
+\"    18    13        2            1\",
+/* colors */
+\". c #358d8d\",
+\"# c None s None\",
+/* pixels */
+\"##################\",
+\"######..##..######\",
+\"#####........#####\",
+\"#.##.##..##...####\",
+\"#...####.###...##.\",
+\"#..###.######.....\",
+\"#####.########...#\",
+\"###########.######\",
+\"####.###.#..######\",
+\"######..###.######\",
+\"###....####.######\",
+\"###..######.######\",
+\"###########.######\" };")))
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
@@ -37,7 +83,7 @@
     ("c:/Users/Christoph/Google Drive/Studium/Bachelorarbeit/Abstract_Bachelorarbeit/abstract.org" "C:\\Users\\Christoph\\Google Drive/Notizen/Org/todo.org")))
  '(package-selected-packages
    (quote
-    (alect-themes zenburn-theme w3 deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref)))
+    (csv-mode alect-themes zenburn-theme w3 deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(tool-bar-mode nil)
  '(vc-annotate-background "#2B2B2B")
@@ -192,10 +238,13 @@
 (setq deft-new-file-format "%Y%m%d%H%M")
 (setq deft-default-extension "org")
 (setq deft-text-mode 'org-mode)
+(setq deft-auto-save-interval nil)
 
 					;============== ORG-MODE
 					;------- org mode
 (setq org-startup-folded nil)
+(setq org-src-fontify-natively t)
+(setq org-link-file-path-type 'relative)
 
 					;------------- org agenda
 (setq org-log-done 'time)
