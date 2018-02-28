@@ -227,13 +227,17 @@ static char *gnus-pointer[] = {
 (elpy-enable)
 (setq elpy-rpc-backend "jedi")
 
+					;----------- csv mode
+(setq csv-separators (list "," "\t" ";"))
+
 					;---------------- deft
 (require 'deft)
 (setq deft-extensions '("txt" "tex" "org"))
-(setq deft-directory (substitute-in-file-name "$GoogleDrive/Notizen"))
+(setq deft-directory (substitute-in-file-name "$GoogleDrive/Notizen/Org"))
 (setq deft-recursive t)
 (global-set-key [f8] 'deft)
-(setq deft-use-filename-as-title t)
+;; (setq deft-use-filename-as-title t)
+(setq deft-org-mode-title-prefix t)
 (global-set-key (kbd "C-x C-g") 'deft-find-file)
 (setq deft-new-file-format "%Y%m%d%H%M")
 (setq deft-default-extension "org")
