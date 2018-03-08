@@ -233,7 +233,7 @@ static char *gnus-pointer[] = {
 					;---------------- deft
 (require 'deft)
 (setq deft-extensions '("txt" "tex" "org"))
-(setq deft-directory (substitute-in-file-name "$GoogleDrive/Notizen/Org"))
+(setq deft-directory (substitute-in-file-name "$GoogleDrive/Privat/Notizen"))
 (setq deft-recursive t)
 (global-set-key [f8] 'deft)
 ;; (setq deft-use-filename-as-title t)
@@ -252,7 +252,7 @@ static char *gnus-pointer[] = {
 
 					;------------- org agenda
 (setq org-log-done 'time)
-(setq org-agenda-files (list (substitute-in-file-name "$GoogleDrive/Notizen/Org/todo.org")))
+(setq org-agenda-files (list (substitute-in-file-name "$GoogleDrive/Privat/todo.org")))
 (setq org-archive-location "archiv.org::datetree/")
 
 					;----------------- latex export
@@ -279,9 +279,9 @@ static char *gnus-pointer[] = {
 					;------------- helm bibtex
 (autoload 'helm-bibtex "helm-bibtex" "" t)
 
-(setq bibtex-completion-bibliography (substitute-in-file-name "$GoogleDrive/Notizen/Org/quellen.bib")
-      bibtex-completion-library-path (substitute-in-file-name "$GoogleDrive/Notizen/Quellen")
-      bibtex-completion-notes-path (substitute-in-file-name "$GoogleDrive/Notizen/Org"))
+(setq bibtex-completion-bibliography (substitute-in-file-name "$GoogleDrive/Privat/Notizen/quellen.bib")
+      bibtex-completion-library-path (substitute-in-file-name "$GoogleDrive/Privat/Quellen")
+      bibtex-completion-notes-path (substitute-in-file-name "$GoogleDrive/Privat/Notizen"))
 
 
 ;; open pdf with system pdf viewer (works on mac)
@@ -293,11 +293,11 @@ static char *gnus-pointer[] = {
 ;; (setq bibtex-completion-pdf-open-function 'org-open-file)
 
 					;---------------------- org ref
-(setq reftex-default-bibliography '((substitute-in-file-name "$GoogleDrive/Notizen/Org/quellen.bib")))
+(setq reftex-default-bibliography '((substitute-in-file-name "$GoogleDrive/Privat/quellen.bib")))
 
 ;; see org-ref for use of these variables
-(setq  org-ref-default-bibliography (list (substitute-in-file-name "$GoogleDrive/Notizen/Org/quellen.bib"))
-       org-ref-pdf-directory (substitute-in-file-name "$GoogleDrive/Notizen/Quellen/"))
+(setq  org-ref-default-bibliography (list (substitute-in-file-name "$GoogleDrive/Privat/Notizen/quellen.bib"))
+       org-ref-pdf-directory (substitute-in-file-name "$GoogleDrive/Privat/Quellen/"))
 
 ;; Tell org-ref to let helm-bibtex find notes for it
 (setq org-ref-notes-function
