@@ -340,10 +340,38 @@ static char *gnus-pointer[] = {
 
 					;===================== Eigene Funktionen
 (defun new-note (name)
-  "Erstellt eine neue Notiz"
+  "Erstellt eine neue Notiz."
   (interactive "sName of the new note: ")
   (find-file (substitute-in-file-name (concat
 				       "$GoogleDrive/Privat/Notizen/"
 				       (format-time-string "%Y%m%d%H%M-")
 				       name
 				       ".org"))))
+
+
+;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
+(defun rename-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not filename)
+        (message "Buffer '%s' is not visiting a file!" name)
+      (if (get-buffer new-name)
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file filename new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
+
+(defun rename-note (name)
+  "Geöffnete Notiz (mit 12-stelliger ID am Anfang) umbennenen."
+  (interactive "sNew name: ")
+  (rename-file-and-buffer (concat
+			   (first (split-string (buffer-name) "-"))
+			   "-"
+			   name
+			   ".org")))
+  
+  
