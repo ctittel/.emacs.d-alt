@@ -141,6 +141,9 @@ static char *gnus-pointer[] = {
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
+					;------------ bell
+(setq visible-bell t)
+
 					;--------------- helm
 (require 'helm)
 (require 'helm-config)
@@ -249,6 +252,9 @@ static char *gnus-pointer[] = {
 (setq org-startup-folded nil)
 (setq org-src-fontify-natively t)
 (setq org-link-file-path-type 'relative)
+
+					;------------ visual line mode
+(add-hook 'org-mode-hook #'visual-line-mode)
 
 					;------------- org agenda
 (setq org-log-done 'time)
