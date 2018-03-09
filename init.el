@@ -337,3 +337,13 @@ static char *gnus-pointer[] = {
 	       ))
 
 
+
+					;===================== Eigene Funktionen
+(defun new-note (name)
+  "Erstellt eine neue Notiz"
+  (interactive "sName of the new note: ")
+  (find-file (substitute-in-file-name (concat
+				       "$GoogleDrive/Privat/Notizen/"
+				       (format-time-string "%Y%m%d%H%M-")
+				       name
+				       ".org"))))
