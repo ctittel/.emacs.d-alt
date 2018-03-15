@@ -387,4 +387,10 @@ static char *gnus-pointer[] = {
 			   "-"
 			   name
 			   ".org")))
-  
+
+(defun new-journal-entry ()
+  "Neuen Journal Eintrag für den heutigen Tag anlegen"
+  (interactive)
+  (find-file (substitute-in-file-name (concat
+				       "$Journal/"
+				       (format-time-string "%Y-%m-%d.txt")))))
