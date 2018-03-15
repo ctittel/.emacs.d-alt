@@ -80,7 +80,7 @@ static char *gnus-pointer[] = {
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(org-agenda-files
    (quote
-    ("c:/Users/Christoph/Google Drive/Studium/Bachelorarbeit/Abstract_Bachelorarbeit/abstract.org" "C:\\Users\\Christoph\\Google Drive/Notizen/Org/todo.org")))
+    ()))
  '(package-selected-packages
    (quote
     (csv-mode alect-themes zenburn-theme w3 deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref)))
@@ -236,7 +236,7 @@ static char *gnus-pointer[] = {
 					;---------------- deft
 (require 'deft)
 (setq deft-extensions '("txt" "tex" "org"))
-(setq deft-directory (substitute-in-file-name "$GoogleDrive/Privat/Notizen"))
+(setq deft-directory (substitute-in-file-name "$Notizen"))
 (setq deft-recursive t)
 (global-set-key [f8] 'deft)
 ;; (setq deft-use-filename-as-title t)
@@ -285,9 +285,9 @@ static char *gnus-pointer[] = {
 					;------------- helm bibtex
 (autoload 'helm-bibtex "helm-bibtex" "" t)
 
-(setq bibtex-completion-bibliography (substitute-in-file-name "$GoogleDrive/Privat/Notizen/quellen.bib")
+(setq bibtex-completion-bibliography (substitute-in-file-name "$Notizen/quellen.bib")
       bibtex-completion-library-path (substitute-in-file-name "$GoogleDrive/Privat/Quellen")
-      bibtex-completion-notes-path (substitute-in-file-name "$GoogleDrive/Privat/Notizen"))
+      bibtex-completion-notes-path (substitute-in-file-name "$Notizen"))
 
 
 ;; open pdf with system pdf viewer (works on mac)
@@ -299,10 +299,10 @@ static char *gnus-pointer[] = {
 ;; (setq bibtex-completion-pdf-open-function 'org-open-file)
 
 					;---------------------- org ref
-(setq reftex-default-bibliography '((substitute-in-file-name "$GoogleDrive/Privat/quellen.bib")))
+(setq reftex-default-bibliography '((substitute-in-file-name "$Notizen/quellen.bib")))
 
 ;; see org-ref for use of these variables
-(setq  org-ref-default-bibliography (list (substitute-in-file-name "$GoogleDrive/Privat/Notizen/quellen.bib"))
+(setq  org-ref-default-bibliography (list (substitute-in-file-name "$Notizen/quellen.bib"))
        org-ref-pdf-directory (substitute-in-file-name "$GoogleDrive/Privat/Quellen/"))
 
 ;; Tell org-ref to let helm-bibtex find notes for it
@@ -342,6 +342,14 @@ static char *gnus-pointer[] = {
 
 	       ))
 
+					;--------------------- Org Publish
+(setq org-publish-project-alist
+      '(("org"
+	 :base-directory (substitute-in-file-name "$Notizen/")
+	 :publishing-directory (substitute-in-file-name "$Notizen/../Export/")
+	 :publishing-function org-html-publish-to-html
+	 :with-toc t
+	 :section-numbers nil)))
 
 
 					;===================== Eigene Funktionen
@@ -349,7 +357,7 @@ static char *gnus-pointer[] = {
   "Erstellt eine neue Notiz."
   (interactive "sName of the new note: ")
   (find-file (substitute-in-file-name (concat
-				       "$GoogleDrive/Privat/Notizen/"
+				       "$Notizen"
 				       (format-time-string "%Y%m%d%H%M-")
 				       name
 				       ".org"))))
@@ -379,5 +387,4 @@ static char *gnus-pointer[] = {
 			   "-"
 			   name
 			   ".org")))
-  
   
