@@ -24,7 +24,7 @@
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(company-quickhelp-color-background "#4F4F4F")
  '(company-quickhelp-color-foreground "#DCDCCC")
- '(custom-enabled-themes (quote (alect-black)))
+ '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
     ("5e3fc08bcadce4c6785fc49be686a4a82a356db569f55d411258984e952f194a" "7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "599f1561d84229e02807c952919cd9b0fbaa97ace123851df84806b067666332" default)))
@@ -78,9 +78,7 @@ static char *gnus-pointer[] = {
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
- '(org-agenda-files
-   (quote
-    ()))
+ '(org-agenda-files (quote nil))
  '(package-selected-packages
    (quote
     (csv-mode alect-themes zenburn-theme w3 deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref)))
@@ -357,7 +355,7 @@ static char *gnus-pointer[] = {
   "Erstellt eine neue Notiz."
   (interactive "sName of the new note: ")
   (find-file (substitute-in-file-name (concat
-				       "$Notizen"
+				       "$Notizen/"
 				       (format-time-string "%Y%m%d%H%M-")
 				       name
 				       ".org"))))
