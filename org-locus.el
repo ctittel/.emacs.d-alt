@@ -3,19 +3,27 @@
 
 
 (require 'org)
+(defcustom org-locus-note-directory nil
+  "Directory where all the notes are stored.")
 
-(defun ct-new-note (name)
-  "Erstellt eine neue Notiz."
+(defcustom org-locus-journal-directory nil
+  "Directory where all the journal entries are stored.")
+
+(defcustom org-locus-journal-file-ending "txt"
+  "File ending for the Journal files. Default: txt")
+
+(defun org-locus-new-note (name)
+  "Create a new Note with the given name."
   (interactive "sName of the new note: ")
   (find-file (substitute-in-file-name (concat
-				       "$Notizen/"
+				       org-locus-note-directory
 				       (format-time-string "%Y%m%d%H%M-")
 				       name
 				       ".org"))))
 
 
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
-(defun ct-rename-file-and-buffer (new-name)
+(defun org-locus-rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
@@ -30,8 +38,8 @@
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
-(defun ct-rename-note (name)
-  "Geöffnete Notiz (mit 12-stelliger ID am Anfang) umbennenen."
+(defun org-locus-rename-note (name)
+  "Rename the open buffer and file but keep the ID at the beginning."
   (interactive "sNew name: ")
   (rename-file-and-buffer (concat
 			   (first (split-string (buffer-name) "-"))
@@ -39,53 +47,46 @@
 			   name
 			   ".org")))
 
-(defun ct-journal-entry (date)
+(defun org-locus-journal-entry (date)
   "Open Journal Entry for Entered day. Date Format 2017-01-31. If empty jump to Journal entry for today."
   (interactive "sDate: ")
   (find-file (substitute-in-file-name (concat
-				       "$Journal/"
+				       org-locus-journal-directory
 				       (if (= (length date) 0)
 					   (format-time-string "%Y-%m-%d")
 					 date)
-				       ".txt"))))
+				       "."
+				       org-locus-journal-file-ending))))
 
-(defun ct-open-file-by-id (id)
-  "Open the file in Notes with the given ID."
+(defun org-locus-open-file-by-id (id)
+  "Open the file in Note or File with the given ID. If the ID is not unique, the first found file is opened. Requirement: be in Note directory."
   (interactive "sID: ")
-  (find-file (ct-id-to-path id)))
+  (find-file (org-locus-id-to-path id)))
 
 
-					;----------------------- My own Org Link Types
-;; http://kitchingroup.cheme.cmu.edu/blog/2016/11/04/New-link-features-in-org-9/
-
-;; Missing:
-;; ========
-;; - complete for node/parent/child:
-;;         x  1. Open Minipuffer and get path
-;;         x  2. Insert Link in current buffer to choosen file
-;;           3. Insert Link to current buffer in choosen file (Backlink)
+					; ========= ORG-LINK DEFINITIONS
 
 (org-link-set-parameters
  "node"
  :follow 'ct-open-file-by-id
  :face '(:foreground "red" :underline t)
- :help-echo (lambda () (ct-link-complete "node")))
+ :help-echo (lambda () (org-locus-link-complete "node")))
 
 (org-link-set-parameters
  "parent"
  :follow 'ct-open-file-by-id
  :face '(:foreground "red" :underline t)
- :help-echo (lambda () (ct-link-complete "parent")))
+ :help-echo (lambda () (org-locus-link-complete "parent")))
 
 (org-link-set-parameters
  "child"
  :follow 'ct-open-file-by-id
  :face '(:foreground "red" :underline t)
  :help-echo 'ct-filename-tooltip
- :complete (lambda () (ct-link-complete "child")))
+ :complete (lambda () (org-locus-link-complete "child")))
 
-(defun ct-filename-tooltip (window object position)
-  "Position is the position of something like file:2323. Returns a full (relative) filepath to this file."
+(defun org-locus-filename-tooltip (window object position)
+  "Position is the position of something like file:201712241255. Returns a full (relative) filepath to this file."
     (save-excursion
     (goto-char position)
     (goto-char (org-element-property :begin (org-element-context)))
@@ -95,11 +96,11 @@
 					  "."))))
           (t "No match"))))
 
-(defun ct-id-to-path (id)
-  "Give ID, returns filepath."
+(defun org-locus-id-to-path (id)
+  "Returns the full path for a note given it's ID."
   (find-file (first (file-name-all-completions id "."))))
 
-(defun ct-link-complete (link)
+(defun org-locus-link-complete (link)
   (concat link
 	  ":"
 	  (first (split-string (first (last (split-string
@@ -107,7 +108,7 @@
 					     "/")))
 			       "-"))))
 
-(defun ct-insert-backlink ()
+(defun org-locus-insert-backlink ()
   "Insert backlink for Node: Parent: or Child: Link."
   (interactive)
   (message "%s" (thing-at-point 'line)))
