@@ -398,14 +398,14 @@ static char *gnus-pointer[] = {
 					 date)
 				       ".txt"))))
 
-
-;; Own persoan Org-Mode link Types (parent: child:
 (defun ct-open-file-by-id (id)
   "Open the file in Notes with the given ID."
   (interactive "sID: ")
   (find-file (first (file-name-all-completions id "."))))
-  
-;; (org-add-link-type "fileid" 'ct-open-file-by-id)
+
+
+					;----------------------- My own Org Link Types
+;; http://kitchingroup.cheme.cmu.edu/blog/2016/11/04/New-link-features-in-org-9/
 
 (org-link-set-parameters
  "node"
@@ -417,10 +417,22 @@ static char *gnus-pointer[] = {
  "parent"
  :follow 'ct-open-file-by-id
  :face '(:foreground "red" :underline t)
- :help-echo "test lol")
+ :help-echo 'ct-filename-tooltip)
 
 (org-link-set-parameters
  "child"
  :follow 'ct-open-file-by-id
  :face '(:foreground "red" :underline t)
  :help-echo (lambda (window object position) (concat "Open file: " (first (file-name-all-completions object ".")))))
+
+(defun ct-filename-tooltip (window object position)
+    (save-excursion
+    (goto-char position)
+    (goto-char (org-element-property :begin (org-element-context)))
+    (cond ((looking-at org-plain-link-re)
+           (format "Looking at %s" (last (split-string (match-string 0) "\\:"))))
+          ((looking-at org-bracket-link-regexp)
+           (format "Looking at %s"
+                   (last (split-string (match-string 0) "\\:"))))
+          (t
+           "No match"))))
