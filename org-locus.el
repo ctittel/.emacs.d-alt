@@ -12,6 +12,12 @@
 (defcustom org-locus-journal-file-ending "txt"
   "File ending for the Journal files. Default: txt")
 
+(defcustom org-locus-id-seperator "-"
+  "Seperator that sperates the ID from the rest of the filename.
+Example: 201712241055-test.org 
+Default Seperator is '-'
+Used in the split-string function, so a regular expression can be applied.")
+
 (defun org-locus-new-note (name)
   "Create a new Note with the given name."
   (interactive "sName of the new note: ")
@@ -44,7 +50,7 @@
   (interactive "sNew name: ")
   (rename-file-and-buffer (concat
 			   (first (split-string (buffer-name) "-"))
-			   "-"
+			   org-locus-id-seperator
 			   name
 			   ".org")))
 
@@ -103,10 +109,35 @@
 	  (first (split-string (first (last (split-string
 					     (read-file-name "Choose file to link: ")
 					     "/")))
-			       "-"))))
+			       org-locus-id-seperator))))
+
+(defun org-locus-path-at-point ()
+  "Returns the Path / ID of the Link at point."
+  (org-element-property :path (org-element-context)))
+
+(defun org-locus-filename-to-id (filename)
+  "Gets the filename, returns the ID.
+Filename format: 201712241055-hello-world.txt"
+  (first (split-string filename org-locus-id-seperator)))
 
 (defun org-locus-insert-backlink ()
-  "Insert backlink for Node: Parent: or Child: Link."
+  "Insert backlink for Node: Parent: or Child: Link.
+If Links already exists do nothing."
   (interactive)
-  (message "%s" (thing-at-point 'line)))
-;; org-element-context
+  (let ((link-id (org-element-property :path (org-element-context)))
+	(type (org-element-property :type (org-element-context)))
+	(id (org-locus-filename-to-id (buffer-name))))
+    (org-locus-insert-link link-id (org-locus-get-backlink-type type) id)))
+
+(defun org-locus-insert-link (fileid linktype linkpath)
+  "Inserts linktype:linkpath in file with fileid in org-locus notes directory."
+  (let ((path (org-locus-id-to-path fileid))
+	(link (concat linktype ":" linkpath)))
+    
+
+(defun org-locus-get-backlink-type (type)
+  (cond ((string= type "parent") "child")
+	((string= type "child") "parent")
+	((string= type "node") "node")))
+
+;;(f-append-text text 'utf-8 path)
