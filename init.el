@@ -418,21 +418,20 @@ static char *gnus-pointer[] = {
  "node"
  :follow 'ct-open-file-by-id
  :face '(:foreground "red" :underline t)
- :help-echo 'ct-filename-tooltip)
+ :help-echo (lambda () (ct-link-complete "node")))
 
 (org-link-set-parameters
  "parent"
  :follow 'ct-open-file-by-id
  :face '(:foreground "red" :underline t)
- :help-echo 'ct-filename-tooltip)
+ :help-echo (lambda () (ct-link-complete "parent")))
 
 (org-link-set-parameters
  "child"
  :follow 'ct-open-file-by-id
  :face '(:foreground "red" :underline t)
  :help-echo 'ct-filename-tooltip
- ;; :complete 'my-comp
- )
+ :complete (lambda () (ct-link-complete "child")))
 
 (defun ct-filename-tooltip (window object position)
   "Position is the position of something like file:2323. Returns a full (relative) filepath to this file."
@@ -440,11 +439,15 @@ static char *gnus-pointer[] = {
     (goto-char position)
     (goto-char (org-element-property :begin (org-element-context)))
     (cond ((or (looking-at org-plain-link-re) (looking-at org-bracket-link-regexp))
-           (format "OPEN FILE %s" (first (file-name-all-completions (first (last (split-string (match-string 0) "\\:"))) "."))))
-          (t
-           "No match"))))
+           (format "OPEN FILE %s" (first (file-name-all-completions
+					  (first (rest (split-string (match-string 0) "\\:")))
+					  "."))))
+          (t "No match"))))
 
-(defun my-comp (&optional arg)
-  (interactive f)
-  (format "child:%s"
-	  "test"))
+(defun ct-link-complete (link)
+  (concat link
+	  ":"
+	  (first (split-string (first (last (split-string
+					     (read-file-name "Choose file to link: ")
+					     "/")))
+			       "-"))))
