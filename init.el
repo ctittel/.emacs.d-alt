@@ -407,11 +407,18 @@ static char *gnus-pointer[] = {
 					;----------------------- My own Org Link Types
 ;; http://kitchingroup.cheme.cmu.edu/blog/2016/11/04/New-link-features-in-org-9/
 
+;; Missing:
+;; ========
+;; - complete for node/parent/child:
+;;           1. Open Minipuffer and get path
+;;           2. Insert Link in current buffer to choosen file
+;;           3. Insert Link to current buffer in choosen file (Backlink)
+
 (org-link-set-parameters
  "node"
  :follow 'ct-open-file-by-id
  :face '(:foreground "red" :underline t)
- :help-echo (lambda (window) (concat "Window: " window)))
+ :help-echo 'ct-filename-tooltip)
 
 (org-link-set-parameters
  "parent"
@@ -423,9 +430,12 @@ static char *gnus-pointer[] = {
  "child"
  :follow 'ct-open-file-by-id
  :face '(:foreground "red" :underline t)
- :help-echo (lambda (window object position) (concat "Open file: " (first (file-name-all-completions object ".")))))
+ :help-echo 'ct-filename-tooltip
+ ;; :complete 'my-comp
+ )
 
 (defun ct-filename-tooltip (window object position)
+  "Position is the position of something like file:2323. Returns a full (relative) filepath to this file."
     (save-excursion
     (goto-char position)
     (goto-char (org-element-property :begin (org-element-context)))
@@ -433,3 +443,8 @@ static char *gnus-pointer[] = {
            (format "OPEN FILE %s" (first (file-name-all-completions (first (last (split-string (match-string 0) "\\:"))) "."))))
           (t
            "No match"))))
+
+(defun my-comp (&optional arg)
+  (interactive f)
+  (format "child:%s"
+	  "test"))
