@@ -401,7 +401,7 @@ static char *gnus-pointer[] = {
 (defun ct-open-file-by-id (id)
   "Open the file in Notes with the given ID."
   (interactive "sID: ")
-  (find-file (first (file-name-all-completions id "."))))
+  (find-file (ct-id-to-path id)))
 
 
 					;----------------------- My own Org Link Types
@@ -410,8 +410,8 @@ static char *gnus-pointer[] = {
 ;; Missing:
 ;; ========
 ;; - complete for node/parent/child:
-;;           1. Open Minipuffer and get path
-;;           2. Insert Link in current buffer to choosen file
+;;         x  1. Open Minipuffer and get path
+;;         x  2. Insert Link in current buffer to choosen file
 ;;           3. Insert Link to current buffer in choosen file (Backlink)
 
 (org-link-set-parameters
@@ -444,6 +444,10 @@ static char *gnus-pointer[] = {
 					  "."))))
           (t "No match"))))
 
+(defun ct-id-to-path (id)
+  "Give ID, returns filepath."
+  (find-file (first (file-name-all-completions id "."))))
+
 (defun ct-link-complete (link)
   (concat link
 	  ":"
@@ -451,3 +455,8 @@ static char *gnus-pointer[] = {
 					     (read-file-name "Choose file to link: ")
 					     "/")))
 			       "-"))))
+
+(defun ct-insert-backlink ()
+  "Insert backlink for Node: Parent: or Child: Link."
+  (interactive)
+  (message "%s" (thing-at-point 'line))
