@@ -57,14 +57,20 @@ Used in the split-string function, so a regular expression can be applied.")
 (defun org-locus-journal-entry (date)
   "Open Journal Entry for Entered day. Date Format 2017-01-31. If empty jump to Journal entry for today."
   (interactive "sDate: ")
-  (find-file (substitute-in-file-name (concat
-				       org-locus-journal-directory
-				       "/"
-				       (if (= (length date) 0)
-					   (format-time-string "%Y-%m-%d")
-					 date)
-				       "."
-				       org-locus-journal-file-ending))))
+  (if (or (org-locus-check-if-iso-date date) (= (length date) 0))
+      (find-file (substitute-in-file-name (concat
+					   org-locus-journal-directory
+					   "/"
+					   (if (= (length date) 0)
+					       (format-time-string "%Y-%m-%d")
+					     date)
+					   "."
+					   org-locus-journal-file-ending)))
+    (message (concat "\"" date "\" is neither an empty string nor a valid ISO-Date String."))))
+
+
+(defun org-locus-check-if-iso-date (string)
+  (string-match "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}" string))
 
 (defun org-locus-open-file-by-id (id)
   "Open the file in Note or File with the given ID. If the ID is not unique, the first found file is opened. Requirement: be in Note directory."
