@@ -127,13 +127,16 @@ If Links already exists do nothing."
   (let ((link-id (org-element-property :path (org-element-context)))
 	(type (org-element-property :type (org-element-context)))
 	(id (org-locus-filename-to-id (buffer-name))))
-    (org-locus-insert-link link-id (org-locus-get-backlink-type type) id)))
+    (org-locus-append-link-unless-already-in-file link-id (org-locus-get-backlink-type type) id)))
 
-(defun org-locus-insert-link (fileid linktype linkpath)
+(defun org-locus-append-link-unless-already-in-file (fileid linktype linkpath)
   "Inserts linktype:linkpath in file with fileid in org-locus notes directory."
   (let ((path (org-locus-id-to-path fileid))
 	(link (concat linktype ":" linkpath)))
-    
+    (if (org-locus-is-string-in-file path link)
+	(message (concat "Backlink " link " is already in file " path ". Nothing happened."))
+      (progn (f-append-text (concat "\r\n" link) 'utf-8 path)
+	     (message (concat "Backlink " link " was not in " path " and has been appended."))))))
 
 (defun org-locus-get-backlink-type (type)
   (cond ((string= type "parent") "child")
@@ -141,3 +144,11 @@ If Links already exists do nothing."
 	((string= type "node") "node")))
 
 ;;(f-append-text text 'utf-8 path)
+
+(defun org-locus-is-string-in-file (file searchstring)
+  "true / false if searchstring is in file / not."
+   (when (file-readable-p file)
+     (with-temp-buffer
+       (insert-file-contents file)
+       (goto-char (point-min))
+       (search-forward searchstring nil t))))
