@@ -81,7 +81,7 @@ static char *gnus-pointer[] = {
  '(org-agenda-files (quote nil))
  '(package-selected-packages
    (quote
-    (csv-mode alect-themes zenburn-theme w3 deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref)))
+    (org csv-mode alect-themes zenburn-theme w3 deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(tool-bar-mode nil)
  '(vc-annotate-background "#2B2B2B")
@@ -351,7 +351,9 @@ static char *gnus-pointer[] = {
 
 
 					;===================== Eigene Funktionen
-(defun new-note (name)
+(require 'org)
+
+(defun ct-new-note (name)
   "Erstellt eine neue Notiz."
   (interactive "sName of the new note: ")
   (find-file (substitute-in-file-name (concat
@@ -362,7 +364,7 @@ static char *gnus-pointer[] = {
 
 
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
-(defun rename-file-and-buffer (new-name)
+(defun ct-rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
@@ -377,7 +379,7 @@ static char *gnus-pointer[] = {
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
-(defun rename-note (name)
+(defun ct-rename-note (name)
   "Geöffnete Notiz (mit 12-stelliger ID am Anfang) umbennenen."
   (interactive "sNew name: ")
   (rename-file-and-buffer (concat
@@ -386,7 +388,7 @@ static char *gnus-pointer[] = {
 			   name
 			   ".org")))
 
-(defun journal-entry (date)
+(defun ct-journal-entry (date)
   "Open Journal Entry for Entered day. Date Format 2017-01-31. If empty jump to Journal entry for today."
   (interactive "sDate: ")
   (find-file (substitute-in-file-name (concat
@@ -395,3 +397,30 @@ static char *gnus-pointer[] = {
 					   (format-time-string "%Y-%m-%d")
 					 date)
 				       ".txt"))))
+
+
+;; Own persoan Org-Mode link Types (parent: child:
+(defun ct-open-file-by-id (id)
+  "Open the file in Notes with the given ID."
+  (interactive "sID: ")
+  (find-file (first (file-name-all-completions id "."))))
+  
+;; (org-add-link-type "fileid" 'ct-open-file-by-id)
+
+(org-link-set-parameters
+ "node"
+ :follow 'ct-open-file-by-id
+ :face '(:foreground "red" :underline t)
+ :help-echo (lambda (window) (concat "Window: " window)))
+
+(org-link-set-parameters
+ "parent"
+ :follow 'ct-open-file-by-id
+ :face '(:foreground "red" :underline t)
+ :help-echo "test lol")
+
+(org-link-set-parameters
+ "child"
+ :follow 'ct-open-file-by-id
+ :face '(:foreground "red" :underline t)
+ :help-echo (lambda (window object position) (concat "Open file: " (first (file-name-all-completions object ".")))))
