@@ -17,6 +17,7 @@
   (interactive "sName of the new note: ")
   (find-file (substitute-in-file-name (concat
 				       org-locus-note-directory
+				       "/"
 				       (format-time-string "%Y%m%d%H%M-")
 				       name
 				       ".org"))))
@@ -52,6 +53,7 @@
   (interactive "sDate: ")
   (find-file (substitute-in-file-name (concat
 				       org-locus-journal-directory
+				       "/"
 				       (if (= (length date) 0)
 					   (format-time-string "%Y-%m-%d")
 					 date)
@@ -66,41 +68,34 @@
 
 					; ========= ORG-LINK DEFINITIONS
 
-(org-link-set-parameters
- "node"
+(org-link-set-parameters "note"
  :follow 'org-locus-open-file-by-id
  :face '(:foreground "red" :underline t)
  :help-echo 'org-locus-filename-tooltip
- :complete (lambda () (org-locus-link-complete "node")))
+ :complete (lambda () (org-locus-link-complete "note")))
 
-(org-link-set-parameters
- "parent"
+(org-link-set-parameters "parent"
  :follow 'org-locus-open-file-by-id
  :face '(:foreground "red" :underline t)
  :help-echo 'org-locus-filename-tooltip
  :complete (lambda () (org-locus-link-complete "parent")))
 
-(org-link-set-parameters
- "child"
+(org-link-set-parameters "child"
  :follow 'org-locus-open-file-by-id
  :face '(:foreground "red" :underline t)
  :help-echo 'org-locus-filename-tooltip
  :complete (lambda () (org-locus-link-complete "child")))
 
 (defun org-locus-filename-tooltip (window object position)
-  "Position is the position of something like file:201712241255. Returns a full (relative) filepath to this file."
-    (save-excursion
+  "Returns the full filename of the Link ID at pointer as string."
+  (save-excursion
     (goto-char position)
-    (goto-char (org-element-property :begin (org-element-context)))
-    (cond ((or (looking-at org-plain-link-re) (looking-at org-bracket-link-regexp))
-           (format "OPEN FILE %s" (first (file-name-all-completions
-					  (first (rest (split-string (match-string 0) "\\:")))
-					  "."))))
-          (t "No match"))))
+    (message
+     (org-locus-id-to-path (org-element-property :path (org-element-context))))))
 
 (defun org-locus-id-to-path (id)
   "Returns the full path for a note given it's ID."
-  (find-file (first (file-name-all-completions id "."))))
+  (first (file-name-all-completions id ".")))
 
 (defun org-locus-link-complete (link)
   (concat link
@@ -114,3 +109,4 @@
   "Insert backlink for Node: Parent: or Child: Link."
   (interactive)
   (message "%s" (thing-at-point 'line)))
+;; org-element-context

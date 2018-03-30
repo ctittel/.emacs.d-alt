@@ -352,3 +352,6 @@ static char *gnus-pointer[] = {
 
 					;===================== Eigene Funktionen
 (load "~/.emacs.d/org-locus.el")
+
+(setq org-locus-journal-directory "$Journal")
+(setq org-locus-note-directory "$Notizen")
