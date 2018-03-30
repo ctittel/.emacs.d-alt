@@ -68,21 +68,23 @@
 
 (org-link-set-parameters
  "node"
- :follow 'ct-open-file-by-id
+ :follow 'org-locus-open-file-by-id
  :face '(:foreground "red" :underline t)
- :help-echo (lambda () (org-locus-link-complete "node")))
+ :help-echo 'org-locus-filename-tooltip
+ :complete (lambda () (org-locus-link-complete "node")))
 
 (org-link-set-parameters
  "parent"
- :follow 'ct-open-file-by-id
+ :follow 'org-locus-open-file-by-id
  :face '(:foreground "red" :underline t)
- :help-echo (lambda () (org-locus-link-complete "parent")))
+ :help-echo 'org-locus-filename-tooltip
+ :complete (lambda () (org-locus-link-complete "parent")))
 
 (org-link-set-parameters
  "child"
- :follow 'ct-open-file-by-id
+ :follow 'org-locus-open-file-by-id
  :face '(:foreground "red" :underline t)
- :help-echo 'ct-filename-tooltip
+ :help-echo 'org-locus-filename-tooltip
  :complete (lambda () (org-locus-link-complete "child")))
 
 (defun org-locus-filename-tooltip (window object position)
