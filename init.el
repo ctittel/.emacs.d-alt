@@ -429,10 +429,7 @@ static char *gnus-pointer[] = {
     (save-excursion
     (goto-char position)
     (goto-char (org-element-property :begin (org-element-context)))
-    (cond ((looking-at org-plain-link-re)
-           (format "Looking at %s" (last (split-string (match-string 0) "\\:"))))
-          ((looking-at org-bracket-link-regexp)
-           (format "Looking at %s"
-                   (last (split-string (match-string 0) "\\:"))))
+    (cond ((or (looking-at org-plain-link-re) (looking-at org-bracket-link-regexp))
+           (format "OPEN FILE %s" (first (file-name-all-completions (first (last (split-string (match-string 0) "\\:"))) "."))))
           (t
            "No match"))))
