@@ -51,7 +51,7 @@ static char *note[] = {
 \"######....\",
 \"#######..#\" };")))
  '(fci-rule-color "#383838")
- '(gnus-logo-colors (quote ("#0d7b72" "#adadad")))
+ '(gnus-logo-colors (quote ("#0d7b72" "#adadad")) t)
  '(gnus-mode-line-image-cache
    (quote
     (image :type xpm :ascent center :data "/* XPM */
@@ -74,14 +74,14 @@ static char *gnus-pointer[] = {
 \"######..###.######\",
 \"###....####.######\",
 \"###..######.######\",
-\"###########.######\" };")))
+\"###########.######\" };")) t)
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(org-agenda-files (quote nil))
  '(package-selected-packages
    (quote
-    (org csv-mode alect-themes zenburn-theme w3 deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref)))
+    (markdown-mode org csv-mode alect-themes zenburn-theme w3 deft elpy plantuml-mode slime helm-bibtex langtool flycheck company helm org-ref)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(tool-bar-mode nil)
  '(vc-annotate-background "#2B2B2B")
