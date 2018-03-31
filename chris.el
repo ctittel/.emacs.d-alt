@@ -147,7 +147,7 @@ If Links already exists do nothing."
 (defun chris-get-backlink-type (type)
   (cond ((string= type "parent") "child")
 	((string= type "child") "parent")
-	((string= type "node") "node")))
+	((string= type "note") "note")))
 
 
 ;;(f-append-text text 'utf-8 path)
@@ -202,5 +202,4 @@ If Links already exists do nothing."
 (defun chris-remove-all-occurences-in-buffer (string)
   (interactive "sString ")
   (chris-replace-all-occurences string ""))
-
 
