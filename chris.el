@@ -103,7 +103,7 @@ Used in the split-string function, so a regular expression can be applied.")
   (save-excursion
     (goto-char position)
     (message
-     (chris-id-to-path (org-element-property path (org-element-context))))))
+     (chris-id-to-path (org-element-property :path (org-element-context))))))
 
 (defun chris-id-to-path (id)
   "Returns the full path for a note given it's ID."
@@ -111,7 +111,7 @@ Used in the split-string function, so a regular expression can be applied.")
 
 (defun chris-link-complete (link)
   (concat link
-	  ""
+	  ":"
 	  (first (split-string (first (last (split-string
 					     (read-file-name "Choose file to link ")
 					     "/")))
@@ -119,7 +119,7 @@ Used in the split-string function, so a regular expression can be applied.")
 
 (defun chris-path-at-point ()
   "Returns the Path / ID of the Link at point."
-  (org-element-property path (org-element-context)))
+  (org-element-property :path (org-element-context)))
 
 (defun chris-filename-to-id (filename)
   "Gets the filename, returns the ID.
@@ -130,15 +130,15 @@ Filename format 201712241055-hello-world.txt"
   "Insert backlink for Node Parent or Child Link.
 If Links already exists do nothing."
   (interactive)
-  (let ((link-id (org-element-property path (org-element-context)))
-	(type (org-element-property type (org-element-context)))
+  (let ((link-id (org-element-property :path (org-element-context)))
+	(type (org-element-property :type (org-element-context)))
 	(id (chris-filename-to-id (buffer-name))))
     (chris-append-link-unless-already-in-file link-id (chris-get-backlink-type type) id)))
 
 (defun chris-append-link-unless-already-in-file (fileid linktype linkpath)
   "Inserts linktypelinkpath in file with fileid in chris notes directory."
   (let ((path (chris-id-to-path fileid))
-	(link (concat linktype "" linkpath)))
+	(link (concat linktype ":" linkpath)))
     (if (chris-is-string-in-file path link)
 	(message (concat "Backlink " link " already appears in file \"" path "\". Nothing happened."))
       (progn (f-append-text (concat "\r\n" link) 'utf-8 path)
@@ -168,11 +168,12 @@ If Links already exists do nothing."
       (replace-match replace-with))))
 
 (defun chris-replace-all-occurences-in-file (file string replace-with)
+  "Replace all occurences of the regular expression string in file wiht replace-with."
   (when (file-readable-p file)
     (with-temp-buffer
       (insert-file-contents file)
       (goto-char (point-min))
-      (while (search-forward string nil t)
+      (while (re-search-forward string nil t)
 	(replace-match replace-with))
       (write-file file))))
 
@@ -180,12 +181,15 @@ If Links already exists do nothing."
 (defun chris-remove-link-and-backlink-at-point ()
   "Removes both the link at point and be backlink in the referenced file."
   (interactive)
-  (let ((link-id (org-element-property path (org-element-context)))
-	(link-type (org-element-property type (org-element-context)))
+  (let ((link-id (org-element-property :path (org-element-context)))
+	(link-type (org-element-property :type (org-element-context)))
 	(my-id (chris-filename-to-id (buffer-name))))
     (let ((my-type (chris-get-backlink-type link-type)))
-      (chris-replace-all-occurences (chris-make-link link-type link-id) "")
+      (chris-replace-all-occurences  (chris-make-link link-type link-id) "")
       (chris-replace-all-occurences-in-file (chris-id-to-path link-id) (chris-make-link my-type my-id) ""))))
+
+(defun chris-make-regular-expression-for-link (path)
+  (concat "\\[?\\[?" path "\\]?\\]?"))
 
 (defun chris-make-backlink (type path)
   "Makes the backlink. Type is the type that links to the backlink (so gets reversed)"
