@@ -167,7 +167,7 @@ If Links already exists do nothing."
     (while (search-forward string nil t)
       (replace-match replace-with))))
 
-(defun org-locus-replace-all-occurences-in-other-file (file string replace-with)
+(defun org-locus-replace-all-occurences-in-file (file string replace-with)
   (when (file-readable-p file)
     (with-temp-buffer
       (insert-file-contents file)
@@ -184,9 +184,19 @@ If Links already exists do nothing."
 	(link-type (org-element-property type (org-element-context)))
 	(my-id (org-locus-filename-to-id (buffer-name))))
     (let ((my-type (org-locus-get-backlink-type link-type)))
-      (org-locus-replace-all-occurences (concat link-type "" link-id) "")
-      (org-locus-replace-all-occurences-in-other-file (org-locus-id-to-path link-id) (concat my-type "" my-id) ""))))
+      (org-locus-replace-all-occurences (org-locus-make-link link-type link-id) "")
+      (org-locus-replace-all-occurences-in-file (org-locus-id-to-path link-id) (org-locus-make-link my-type my-id) ""))))
+
+(defun org-locus-make-backlink (type path)
+  "Makes the backlink. Type is the type that links to the backlink (so gets reversed)"
+  (org-locus-make-link (org-locus-get-backlink-type type) path))
+
+(defun org-locus-make-link (type path)
+  "Make a link from type and path."
+  (concat type ":" path))
 
 (defun org-locus-remove-all-occurences-in-buffer (string)
   (interactive "sString ")
   (org-locus-replace-all-occurences string ""))
+
+
