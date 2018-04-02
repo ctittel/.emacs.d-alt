@@ -48,7 +48,7 @@ Used in the split-string function, so a regular expression can be applied.")
 (defun chris-rename-note (name)
   "Rename the open buffer and file but keep the ID at the beginning."
   (interactive "sNew name ")
-  (rename-file-and-buffer (concat
+  (chris-rename-file-and-buffer (concat
 			   (first (split-string (buffer-name) "-"))
 			   chris-id-seperator
 			   name
