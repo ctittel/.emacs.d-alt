@@ -57,13 +57,13 @@ Used in the split-string function, so a regular expression can be applied.")
 (defun chris-journal-entry (date)
   "Open Journal Entry for Entered day. Date Format 2017-01-31. If empty jump to Journal entry for today."
   (interactive "sDate ")
-  (if (or (chris-check-if-iso-date date) (= (length date) 0))
+  (if (or (chris-check-if-iso-date date) (= (length date) 0) (chris-check-if-iso-date-without-year date))
       (find-file (substitute-in-file-name (concat
 					   chris-journal-directory
 					   "/"
-					   (if (= (length date) 0)
-					       (format-time-string "%Y-%m-%d")
-					     date)
+					   (cond ((= (length date) 0) (format-time-string "%Y-%m-%d"))
+						 ((= (length date) 5) (concat (format-time-string "%Y-") date))
+						 (t date))
 					   "."
 					   chris-journal-file-ending)))
     (message (concat "\"" date "\" is neither an empty string nor a valid ISO-Date String."))))
@@ -71,6 +71,9 @@ Used in the split-string function, so a regular expression can be applied.")
 
 (defun chris-check-if-iso-date (string)
   (string-match "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}" string))
+
+(defun chris-check-if-iso-date-without-year (string)
+  (string-match "[0-9]\\{2\\}-[0-9]\\{2\\}" string))
 
 (defun chris-open-file-by-id (id)
   "Open the file in Note or File with the given ID. If the ID is not unique, the first found file is opened. Requirement be in Note directory."
