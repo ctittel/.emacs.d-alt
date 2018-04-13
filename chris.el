@@ -21,6 +21,9 @@ Used in the split-string function, so a regular expression can be applied.")
 (defcustom chris-tag-file "index.org"
   "File where the tags are stored.")
 
+(defcustom chris-list-of-tags '("psychologie" "informatik" "status" "attraktion")
+  "List with all tags in file system.")
+
 (defun chris-new-note (name)
   "Create a new Note with the given name."
   (interactive "sName of the new note ")
@@ -105,8 +108,10 @@ Used in the split-string function, so a regular expression can be applied.")
  :complete (lambda () (chris-link-complete "child")))
 
 (org-link-set-parameters "tag"
- :follow '(chris-list-files-that-contain-string (cons "tag:" chris-path-at-point))
- :face '(foreground "red" underline t))
+ :follow '(chris-list-files-that-contain-string (concat "tag:" chris-path-at-point))
+ :face '(foreground "red" underline t)
+ :help-echo "Ein Tag"
+ :complete (lambda () (concat "tag:" (completing-read "Choose Tag: " chris-list-of-tags))))
 
 (defun chris-filename-tooltip (window object position)
   "Returns the full filename of the Link ID at pointer as string."
@@ -215,8 +220,6 @@ If Links already exists do nothing."
 
 (defun chris-list-files-that-contain-string (links)
   (interactive "sFuck:")
-  (deft)
-  (deft-filter-clear)
-  (deft-filter (first links) t)
-  (deft-refresh))
-  
+  (deft-setup)
+  (deft-filter "test")
+  (setq deft-filter-regexp "testt"))
