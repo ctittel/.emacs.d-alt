@@ -18,6 +18,9 @@ Example 201712241055-test.org
 Default Seperator is '-'
 Used in the split-string function, so a regular expression can be applied.")
 
+(defcustom chris-tag-file "index.org"
+  "File where the tags are stored.")
+
 (defun chris-new-note (name)
   "Create a new Note with the given name."
   (interactive "sName of the new note ")
@@ -100,6 +103,10 @@ Used in the split-string function, so a regular expression can be applied.")
  :face '(foreground "red" underline t)
  :help-echo 'chris-filename-tooltip
  :complete (lambda () (chris-link-complete "child")))
+
+(org-link-set-parameters "tag"
+ :follow '(chris-list-files-that-contain-string (cons "tag:" chris-path-at-point))
+ :face '(foreground "red" underline t))
 
 (defun chris-filename-tooltip (window object position)
   "Returns the full filename of the Link ID at pointer as string."
@@ -206,3 +213,10 @@ If Links already exists do nothing."
   (interactive "sString ")
   (chris-replace-all-occurences string ""))
 
+(defun chris-list-files-that-contain-string (links)
+  (interactive "sFuck:")
+  (deft)
+  (deft-filter-clear)
+  (deft-filter (first links) t)
+  (deft-refresh))
+  
